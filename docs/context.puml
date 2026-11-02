@@ -1,0 +1,38 @@
+' Smart Parking Management System - Context Diagram
+@startuml context
+
+' Load C4 shapes for a Level 1 context diagram.
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+' Diagram title.
+title Smart Parking Management System - System Context (C4 Level 1)
+
+' Display a legend explaining the diagram.
+LAYOUT_WITH_LEGEND()
+
+' Define the people who interact with the system.
+Person(driver, "Driver", "Searches for available parking spaces and reserves parking")
+Person(parking_admin, "Parking Administrator", "Manages parking facilities, spaces, and pricing")
+Person(parking_staff, "Parking Staff", "Monitors parking occupancy and validates vehicle entry and exit")
+
+' Define the main system.
+System(parking_system, "Smart Parking System", "Helps drivers find, reserve, and manage parking spaces while enabling parking operators to monitor facilities.")
+
+' Define external systems.
+System_Ext(payment_gateway, "Payment Gateway", "Processes parking payments and refunds")
+System_Ext(notification_provider, "Notification Provider", "Sends reservation confirmations and reminders through SMS or email")
+System_Ext(mapping_service, "Mapping Service", "Provides maps, location information, and navigation")
+System_Ext(parking_sensors, "Parking Sensors / IoT System", "Reports real-time parking space occupancy")
+
+' Define relationships between people and the system.
+Rel(driver, parking_system, "Searches for spaces, makes reservations, and pays")
+Rel(parking_admin, parking_system, "Manages parking facilities, spaces, and pricing")
+Rel(parking_staff, parking_system, "Monitors occupancy and validates vehicle entry and exit")
+
+' Define relationships with external systems.
+Rel(parking_system, payment_gateway, "Processes payments and refunds", "HTTPS / REST")
+Rel(parking_system, notification_provider, "Sends booking confirmations and reminders", "HTTPS / REST")
+Rel(parking_system, mapping_service, "Retrieves location and navigation data", "HTTPS / REST")
+Rel(parking_sensors, parking_system, "Sends parking occupancy updates", "MQTT / HTTP")
+
+@enduml
